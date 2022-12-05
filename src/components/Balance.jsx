@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { namesQuery, setlsUpQuery } from "./utilis/data";
 import { db, auth } from "../firebase";
 import { ref, child, get } from "firebase/database";
@@ -16,6 +16,15 @@ function Balance() {
   const [senderNames, setSenderNames] = useState([]);
   const [receiverNames, setReceiverNames] = useState([]);
 
+  const handleBalance = useCallback(async () => {
+    if (senders !== undefined) {
+      setSenderNames(await namesQuery(senders));
+    }
+    if (receivers !== undefined) {
+      setReceiverNames(await namesQuery(receivers));
+    }
+  }, [senders, receivers]);
+
   useEffect(() => {
     get(child(ref(db), `users/${auth.currentUser.uid}`))
       .then((snapshot) => {
@@ -31,17 +40,9 @@ function Balance() {
       .catch((error) => {
         console.error(error);
       });
-    handleBalance();
-  });
 
-  const handleBalance = async () => {
-    if (senders !== undefined) {
-      setSenderNames(await namesQuery(senders));
-    }
-    if (receivers !== undefined) {
-      setReceiverNames(await namesQuery(receivers));
-    }
-  };
+    handleBalance();
+  }, [handleBalance]);
 
   const handleClick = async (key) => {
     await setlsUpQuery(key, senders[key]);
