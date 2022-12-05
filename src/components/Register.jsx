@@ -2,17 +2,14 @@ import React, { useState } from "react";
 import { auth } from "../firebase";
 import { useNavigate } from "react-router-dom";
 
-import {
-  createAuthUserQuery,
-  createUserQuery,
-  userBalanceQuery,
-} from "./utilis/data";
+import { createAuthUserQuery, createUserQuery } from "./utilis/data";
 
 function Register() {
   const [registerEmail, setRegisterEmail] = useState("");
   const [registerPassword, setRegisterPassword] = useState("");
   const [name, setName] = useState("");
   const navigate = useNavigate();
+  const [errorMessage, setErrorMessage] = useState("");
 
   const register = async () => {
     try {
@@ -26,16 +23,25 @@ function Register() {
 
       // create user balance query
 
-
       await navigate("/");
     } catch (error) {
-      console.log(error.message);
+      setErrorMessage(error.message);
+
+      setTimeout(() => {
+        setErrorMessage("");
+      }, 3000);
     }
   };
 
   return (
     <>
       <div className="form-floating mb-3 mt-5">
+        {errorMessage && (
+          <p className="error p-3 mt-n5 bg-danger text-white">
+            {" "}
+            {errorMessage}{" "}
+          </p>
+        )}
         <input
           type="email"
           className="form-control-lg"

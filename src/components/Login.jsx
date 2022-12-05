@@ -3,11 +3,14 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
 import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "./Context/UserContext";
+import { clear } from "@testing-library/user-event/dist/clear";
+import { useRef } from "react";
 
 function Login() {
   const [loginEmail, setLoginemail] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
   const { setUser } = useContext(UserContext);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const navigate = useNavigate();
 
@@ -21,13 +24,23 @@ function Login() {
 
       navigate("/");
     } catch (error) {
-      console.log(error.message);
+      setErrorMessage(error.message);
+
+      setTimeout(() => {
+        setErrorMessage("");
+      }, 3000);
     }
   };
 
   return (
     <>
       <div className="form-floating mb-3 mt-5">
+        {errorMessage && (
+          <p className="error p-3 mt-n5 bg-danger text-white">
+            {" "}
+            {errorMessage}{" "}
+          </p>
+        )}
         <input
           type="email"
           className="form-control-lg"
