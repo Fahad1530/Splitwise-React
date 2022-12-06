@@ -2,10 +2,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { namesQuery, setlsUpQuery } from "./utilis/data";
 import { db, auth } from "../firebase";
 import { ref, child, get } from "firebase/database";
-
-const BALANCE_STYLES = {
-  minWidth: "32%",
-};
+import classes from "./Balance.module.css";
 
 function Balance() {
   const [senders, setSenders] = useState({});
@@ -17,15 +14,6 @@ function Balance() {
   const [receiverNames, setReceiverNames] = useState([]);
 
   const handleBalance = useCallback(async () => {
-    if (senders !== undefined) {
-      setSenderNames(await namesQuery(senders));
-    }
-    if (receivers !== undefined) {
-      setReceiverNames(await namesQuery(receivers));
-    }
-  }, [senders, receivers]);
-
-  useEffect(() => {
     get(child(ref(db), `users/${auth.currentUser.uid}`))
       .then((snapshot) => {
         if (snapshot.exists()) {
@@ -40,7 +28,15 @@ function Balance() {
       .catch((error) => {
         console.error(error);
       });
+    if (senders !== undefined) {
+      setSenderNames(await namesQuery(senders));
+    }
+    if (receivers !== undefined) {
+      setReceiverNames(await namesQuery(receivers));
+    }
+  }, [senders, receivers]);
 
+  useEffect(() => {
     handleBalance();
   }, [handleBalance]);
 
@@ -65,7 +61,7 @@ function Balance() {
         </tbody>
       </table>
       <div className="d-flex justify-content-around mt-5">
-        <div className="card border-danger mb-3 p-3" style={BALANCE_STYLES}>
+        <div className={`card border-danger mb-3 p-3 ${classes.balance}`}>
           <h6 className="font-weight-bold">Senders</h6>
           <ul className="mr-2 mt-2">
             {senders &&
@@ -84,7 +80,7 @@ function Balance() {
               ))}
           </ul>
         </div>
-        <div className="card border-success mb-3 p-3 " style={BALANCE_STYLES}>
+        <div className={`card border-success mb-3 p-3 ${classes.balance}`}>
           <h6 className="font-weight-bold">Recivers</h6>
           <ul className="mr-2 mt-2">
             {receivers &&

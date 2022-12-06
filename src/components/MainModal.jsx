@@ -16,30 +16,30 @@ import {
 } from "firebase/storage";
 import { UserContext } from "./Context/UserContext";
 import { addExpenseQuery, balanceQuery } from "./utilis/data";
+import classes from "./MainModal.module.css";
 
-const MODAL_STYLES = {
-  position: "fixed",
-  top: "11%",
-  left: "30%",
-  width: "30%",
-  backgroundColor: "#FFF",
-  borderRadius: "2%",
-  zIndex: 1041,
-};
+// const MODAL_STYLES = {
+//   position: "fixed",
+//   top: "11%",
+//   left: "30%",
+//   width: "30%",
+//   backgroundColor: "#FFF",
+//   borderRadius: "2%",
+// };
 
-const OVERLAY_STYLES = {
-  position: "fixed",
-  top: 0,
-  left: 0,
-  right: 0,
-  bottom: 0,
-  backgroundColor: "rgba(0, 0, 0, .7)",
-  zIndex: 1041,
-};
+// const OVERLAY_STYLES = {
+//   position: "fixed",
+//   top: 0,
+//   left: 0,
+//   right: 0,
+//   bottom: 0,
+//   backgroundColor: "rgba(0, 0, 0, .7)",
+//   zIndex: 1041,
+// };
 
-const DESCRIPTION_STYLES = {
-  width: "90%",
-};
+// const DESCRIPTION_STYLES = {
+//   width: "90%",
+// };
 
 export default function MainModal({ open, onClose, options }) {
   const [selectedUsers, setSelectedUsers] = useState();
@@ -135,8 +135,8 @@ export default function MainModal({ open, onClose, options }) {
   return ReactDom.createPortal(
     <>
       <div className="align-items-center">{alert && <ToastContainer />}</div>
-      <div style={OVERLAY_STYLES} />
-      <div style={MODAL_STYLES}>
+      <div className={classes.overlay} />
+      <div className={classes.modal}>
         <Modal.Header>
           <Modal.Title>Add Expense </Modal.Title>
         </Modal.Header>
@@ -158,9 +158,8 @@ export default function MainModal({ open, onClose, options }) {
 
           <div className="mb-3 mt-3 ">
             <textarea
-              style={DESCRIPTION_STYLES}
               placeholder="Description"
-              className="form-control "
+              className={`form-control ${classes.description} `}
               id="description"
               rows="3"
               onChange={(event) => {
