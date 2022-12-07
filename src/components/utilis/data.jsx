@@ -128,3 +128,25 @@ export const setlsUpQuery = async (receiverId, amount) => {
     });
   });
 };
+
+export const mapAuthCodeToMessage = (authCode) => {
+  switch (authCode) {
+    case "auth/invalid-password":
+      return "Password provided is not corrected";
+
+    case "auth/invalid-email":
+      return "Email provided is invalid";
+
+    case "auth/email-already-exists":
+      return "Email is already taken";
+
+    case "auth/email-already-in-use":
+      return "Email is already taken";
+
+    case "auth/weak-password":
+      return "Choose a strong password";
+
+    default:
+      return "";
+  }
+};
