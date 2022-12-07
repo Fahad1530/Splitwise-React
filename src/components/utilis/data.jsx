@@ -150,3 +150,26 @@ export const mapAuthCodeToMessage = (authCode) => {
       return "";
   }
 };
+
+export const allUsersQuery = async () => {
+  const data = [];
+  await get(child(ref(db), `users`))
+    .then((snapshot) => {
+      if (snapshot.exists()) {
+        Object.entries(snapshot.val()).map(([key, value]) => {
+          key !== auth.currentUser?.uid &&
+            data.push({
+              value: key,
+              label: value.name,
+            });
+        });
+      } else {
+        console.log("No data available");
+      }
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+
+  return data;
+};

@@ -1,36 +1,20 @@
 import React, { useEffect, useState } from "react";
-import { db } from "./../firebase";
-import { ref, child, get } from "firebase/database";
+import { auth } from "./../firebase";
 import MainModal from "./MainModal";
-import { auth } from "../firebase";
-import Freinds from "./Balance";
+import Balance from "./Balance";
+import { allUsersQuery } from "./utilis/data";
 
 function Home() {
   const [isMainOpen, setIsMainOpen] = useState(false);
-
   const [options, setOptions] = useState([]);
 
-  const data = [];
-
   useEffect(() => {
-    get(child(ref(db), `users`))
-      .then((snapshot) => {
-        if (snapshot.exists()) {
-          Object.entries(snapshot.val()).map(([key, value]) => {
-            key !== auth.currentUser?.uid &&
-              data.push({
-                value: key,
-                label: value.name,
-              });
-          });
-          setOptions(data);
-        } else {
-          console.log("No data available");
-        }
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    const fetchUsers = async () => {
+      const users = await allUsersQuery();
+
+      setOptions(users);
+    };
+    fetchUsers();
   }, [isMainOpen]);
 
   return (
@@ -39,7 +23,7 @@ function Home() {
         <div>
           <div className="badge bg-light text-dark  border border-round w-50 h-50 mt-5">
             <div className="d-flex justify-content-between">
-              <h5 className="ml-2">Hi....{auth.currentUser.email}!!!</h5>
+              <h5 className="ml-2">Welcome!!!!</h5>
               <button
                 type="button"
                 onClick={() => setIsMainOpen(true)}
@@ -53,7 +37,7 @@ function Home() {
               onClose={() => setIsMainOpen(false)}
               options={options}
             ></MainModal>
-            <Freinds />
+            <Balance />
           </div>
         </div>
       )}
