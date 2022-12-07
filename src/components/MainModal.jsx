@@ -18,29 +18,6 @@ import { UserContext } from "./Context/UserContext";
 import { addExpenseQuery, balanceQuery } from "./utilis/data";
 import classes from "./MainModal.module.css";
 
-// const MODAL_STYLES = {
-//   position: "fixed",
-//   top: "11%",
-//   left: "30%",
-//   width: "30%",
-//   backgroundColor: "#FFF",
-//   borderRadius: "2%",
-// };
-
-// const OVERLAY_STYLES = {
-//   position: "fixed",
-//   top: 0,
-//   left: 0,
-//   right: 0,
-//   bottom: 0,
-//   backgroundColor: "rgba(0, 0, 0, .7)",
-//   zIndex: 1041,
-// };
-
-// const DESCRIPTION_STYLES = {
-//   width: "90%",
-// };
-
 export default function MainModal({ open, onClose, options }) {
   const [selectedUsers, setSelectedUsers] = useState();
   const [isShow, setIsShow] = useState(false);
