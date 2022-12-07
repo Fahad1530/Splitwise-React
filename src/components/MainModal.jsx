@@ -1,19 +1,20 @@
 import React, { useContext, useEffect, useState } from "react";
 import ReactDom from "react-dom";
-import { Modal, Button } from "react-bootstrap";
 import Select from "react-select";
-import CurrencyInput from "react-currency-input-field";
-import { auth, storage } from "./../firebase";
-import { ref, push } from "firebase/database";
-import ShowModal from "./ShowModal";
-import { db } from "./../firebase";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import {
-  ref as ref2,
+  auth,
+  storage,
+  db,
+  ref,
+  push,
+  ref2,
   uploadBytesResumable,
   getDownloadURL,
-} from "firebase/storage";
+  Modal,
+  Button,
+  CurrencyInput,
+} from "./../firebase";
+import ShowModal from "./ShowModal";
 import { UserContext } from "./Context/UserContext";
 import { addExpenseQuery, balanceQuery } from "./utilis/data";
 import classes from "./MainModal.module.css";
@@ -111,7 +112,6 @@ export default function MainModal({ open, onClose, options }) {
 
   return ReactDom.createPortal(
     <>
-      <div className="align-items-center">{alert && <ToastContainer />}</div>
       <div className={classes.overlay} />
       <div className={classes.modal}>
         <Modal.Header>
