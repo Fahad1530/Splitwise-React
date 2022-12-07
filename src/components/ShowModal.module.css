@@ -1,0 +1,40 @@
+.modal {
+  position: fixed;
+  width: 22%;
+  top: 11%;
+  left: 61%;
+  background-color: #FFF;
+  z-index: 1041;
+  min-height: 35%;
+  border-radius: 2%;
+}
+
+
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1040;
+}
+
+
+
+.button1 {
+  position: absolute;
+  bottom: 10;
+  right: 0;
+  margin-right: 10px;
+}
+
+
+
+.button2 {
+  color: #fff;
+  background-color: #6c757d;
+  border-color: #6c757d;
+  margin-right: 3px;
+  margin-top: 3rem;
+}
